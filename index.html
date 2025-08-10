@@ -1,0 +1,701 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DIU Canteen Hub - Healthy Campus Dining</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .logo::before {
+            content: "🍽️";
+            font-size: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #2c3e50;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .hero {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+        }
+
+        .search-bar {
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 1rem 3rem 1rem 1.5rem;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .search-bar button {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            background: rgba(255,255,255,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .stat-number {
+            font-size: 2.5rem;
+            font-weight: bold;
+            display: block;
+        }
+
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .canteen-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .canteen-card {
+            background: rgba(255,255,255,0.95);
+            border-radius: 20px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+
+        .canteen-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .canteen-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+
+        .canteen-name {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .status-open {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .status-closed {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .canteen-info {
+            margin-bottom: 1.5rem;
+        }
+
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stars {
+            color: #f39c12;
+        }
+
+        .popular-items {
+            margin-bottom: 1rem;
+        }
+
+        .popular-items h4 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .food-tag {
+            display: inline-block;
+            background: #ecf0f1;
+            color: #2c3e50;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            margin: 0.2rem;
+        }
+
+        .healthy-tag {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .featured-section {
+            background: rgba(255,255,255,0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            backdrop-filter: blur(10px);
+            margin-bottom: 3rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .featured-item {
+            background: rgba(255,255,255,0.9);
+            border-radius: 15px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .featured-item h3 {
+            color: #2c3e50;
+            margin-bottom: 0.5rem;
+        }
+
+        .price {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #27ae60;
+        }
+
+        .footer {
+            background: rgba(0,0,0,0.1);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .canteen-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .notification {
+            background: rgba(52, 152, 219, 0.9);
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: 500;
+        }
+    </style>
+</head>
+<body>
+    <div class="notification">
+        🌟 New Feature: Real-time food availability updates now live! Never miss your favorite meal again.
+    </div>
+
+    <header>
+        <nav>
+            <div class="logo">DIU Canteen Hub</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#canteens">Canteens</a></li>
+                <li><a href="#healthy">Healthy Options</a></li>
+                <li><a href="#reviews">Reviews</a></li>
+                <li><a href="#about">About</a></li>
+            </ul>
+            <div class="auth-buttons">
+                <a href="#" class="btn btn-secondary">Login</a>
+                <a href="#" class="btn btn-primary">Sign Up</a>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <h1>Discover Healthy Campus Dining</h1>
+        <p>Connect with all DIU canteens, find your favorite meals, and make informed food choices for a healthier campus life.</p>
+        
+        <div class="search-bar">
+            <input type="text" placeholder="Search for food, canteen, or cuisine type...">
+            <button>🔍</button>
+        </div>
+
+        <div class="stats">
+            <div class="stat-item">
+                <span class="stat-number">12</span>
+                <span>Active Canteens</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">150+</span>
+                <span>Daily Menu Items</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">4.7★</span>
+                <span>Average Rating</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">2,500+</span>
+                <span>Happy Students</span>
+            </div>
+        </div>
+    </section>
+
+    <main class="main-content">
+        <h2 class="section-title">Available Canteens</h2>
+        
+        <div class="canteen-grid">
+            <div class="canteen-card" onclick="viewCanteen('central')">
+                <div class="canteen-header">
+                    <div class="canteen-name">Green Garden</div>
+                    <div class="status-badge status-open">OPEN</div>
+                </div>
+                <div class="canteen-info">
+                    <div class="rating">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span>4.8 (234 reviews)</span>
+                    </div>
+                    <p>📍 Green Garden | ⏰ 7:00 AM - 9:00 PM</p>
+                </div>
+                <div class="popular-items">
+                    <h4>Today's Popular:</h4>
+                    <span class="food-tag healthy-tag">🥗 Khacuri</span>
+                    <span class="food-tag">🍛 Beef Biryani</span>
+                    <span class="food-tag healthy-tag">🥤 Fresh Juice</span>
+                </div>
+            </div>
+
+            <div class="canteen-card" onclick="viewCanteen('north')">
+                <div class="canteen-header">
+                    <div class="canteen-name">Yunus khan Scholar garden 1 Canteen</div>
+                    <div class="status-badge status-open">OPEN</div>
+                </div>
+                <div class="canteen-info">
+                    <div class="rating">
+                        <span class="stars">⭐⭐⭐⭐</span>
+                        <span>4.5 (156 reviews)</span>
+                    </div>
+                    <p>📍 Yunus khan Scholar garden 1, 1st Floor | ⏰ 8:00 AM - 8:00 PM</p>
+                </div>
+                <div class="popular-items">
+                    <h4>Today's Popular:</h4>
+                    <span class="food-tag">🍜 Half chicken</span>
+                    <span class="food-tag healthy-tag">🐟 Ruhi Fish</span>
+                    <span class="food-tag">Vorta</span>
+                </div>
+            </div>
+
+            <div class="canteen-card" onclick="viewCanteen('south')">
+                <div class="canteen-header">
+                    <div class="canteen-name">Chillex</div>
+                    <div class="status-badge status-open">OPEN</div>
+                </div>
+                <div class="canteen-info">
+                    <div class="rating">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span>4.6 (189 reviews)</span>
+                    </div>
+                    <p>📍 Food Court, 1st Floor | ⏰ 6:30 AM - 10:00 PM</p>
+                </div>
+                <div class="popular-items">
+                    <h4>Today's Popular:</h4>
+                    <span class="food-tag healthy-tag">🥗 Noodles</span>
+                    <span class="food-tag">🍕 Pizza</span>
+                    <span class="food-tag healthy-tag">🥤 Protein Smoothie</span>
+                </div>
+            </div>
+
+            <div class="canteen-card" onclick="viewCanteen('library')">
+                <div class="canteen-header">
+                    <div class="canteen-name">Library Cafe</div>
+                    <div class="status-badge status-closed">CLOSED</div>
+                </div>
+                <div class="canteen-info">
+                    <div class="rating">
+                        <span class="stars">⭐⭐⭐⭐</span>
+                        <span>4.3 (98 reviews)</span>
+                    </div>
+                    <p>📍 AB4, 4th Floor | ⏰ Opens at 7:00 AM</p>
+                </div>
+                <div class="popular-items">
+                    <h4>Specialty:</h4>
+                    <span class="food-tag">☕Coffee</span>
+                    <span class="food-tag healthy-tag">🥪 Study Snacks</span>
+                    <span class="food-tag">🧁 Desserts</span>
+                </div>
+            </div>
+
+            <div class="canteen-card" onclick="viewCanteen('faculty')">
+                <div class="canteen-header">
+                    <div class="canteen-name">Yunus khan Scholar garden 2 Canteen</div>
+                    <div class="status-badge status-open">OPEN</div>
+                </div>
+                <div class="canteen-info">
+                    <div class="rating">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span>4.9 (67 reviews)</span>
+                    </div>
+                    <p>📍 Yunus khan Scholar garden 2 , 1st floor  | ⏰ 8:00 AM - 6:00 PM</p>
+                </div>
+                <div class="popular-items">
+                    <h4>Today's Special:</h4>
+                    <span class="food-tag healthy-tag">🍽️ Half Chicken</span>
+                    <span class="food-tag">Khaccuri</span>
+                    <span class="food-tag healthy-tag">Fish</span>
+                </div>
+            </div>
+
+            <div class="canteen-card" onclick="viewCanteen('sports')">
+                <div class="canteen-header">
+                    <div class="canteen-name">Rowshan Ara Scholar Garden Canteen</div>
+                    <div class="status-badge status-open">OPEN</div>
+                </div>
+                <div class="canteen-info">
+                    <div class="rating">
+                        <span class="stars">⭐⭐⭐⭐</span>
+                        <span>4.4 (145 reviews)</span>
+                    </div>
+                    <p>📍 Rowshan Ara Scholar Garden , 1st Floor | ⏰ 7:00 AM - 9:00 PM</p>
+                </div>
+                <div class="popular-items">
+                    <h4>Energy Boosters:</h4>
+                    <span class="food-tag healthy-tag">Chicken</span>
+                    <span class="food-tag healthy-tag">Fish</span>
+                    <span class="food-tag">Vagi</span>
+                </div>
+            </div>
+        </div>
+
+         <div class="featured-section">
+            <h2 class="section-title" style="color: white; margin-bottom: 2rem;">🌟 Today's Healthy Highlights</h2>
+            <div class="featured-grid">
+                <div class="featured-item">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🍗🍛</div>
+                    <h3>Chicken Biryani</h3>
+                    <p>Biryani Made With Chicken</p>
+                    <div class="rating" style="justify-content: center; margin: 1rem 0;">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span>(4.8/5)</span>
+                    </div>
+                    <div class="price">৳120</div>
+                    <p style="font-size: 0.9rem; color: #27ae60; margin-top: 0.5rem;">📍 Green Garden</p>
+                </div>
+                
+                <div class="featured-item">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🍲</div>
+                    <h3>Soup</h3>
+                    <p>Red lentils, spinach, ginger, coconut milk</p>
+                    <div class="rating" style="justify-content: center; margin: 1rem 0;">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span>(4.7/5)</span>
+                    </div>
+                    <div class="price">৳80</div>
+                    <p style="font-size: 0.9rem; color: #27ae60; margin-top: 0.5rem;">📍 Food Court</p>
+                </div>
+                
+                <div class="featured-item">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🥤</div>
+                    <h3>Smoothie</h3>
+                    <p>Spinach, banana, mango, chia seeds, coconut water</p>
+                    <div class="rating" style="justify-content: center; margin: 1rem 0;">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span>(4.9/5)</span>
+                    </div>
+                    <div class="price">৳65</div>
+                    <p style="font-size: 0.9rem; color: #27ae60; margin-top: 0.5rem;">📍 Food Court</p>
+                </div>
+
+                <div class="featured-item">
+                    <div style="font-size: 3rem; margin-bottom: 1rem;">🐟</div>
+                    <h3>Ruhi Fish</h3>
+                    <p>Ruhi Fish</p>
+                    <div class="rating" style="justify-content: center; margin: 1rem 0;">
+                        <span class="stars">⭐⭐⭐⭐⭐</span>
+                        <span>(4.8/5)</span>
+                    </div>
+                    <div class="price">৳70</div>
+                    <p style="font-size: 0.9rem; color: #27ae60; margin-top: 0.5rem;">📍 Yunus khan Scholar garden 1</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="featured-section">
+            <h2 class="section-title" style="color: white; margin-bottom: 2rem;">📊 Live Campus Dining Stats</h2>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem;">
+                <div class="featured-item">
+                    <h3>🔥 Most Ordered Today</h3>
+                    <p style="font-size: 1.2rem; margin: 1rem 0;">Beef Biryani</p>
+                    <div class="price">234 orders</div>
+                </div>
+                <div class="featured-item">
+                    <h3>⏰ Peak Hours</h3>
+                    <p style="font-size: 1.2rem; margin: 1rem 0;">12:00 - 2:00 PM</p>
+                    <div class="price">87% capacity</div>
+                </div>
+                <div class="featured-item">
+                    <h3>💚 Healthy Choice Winner</h3>
+                    <p style="font-size: 1.2rem; margin: 1rem 0;">Mediterranean Bowl</p>
+                    <div class="price">4.9★ rating</div>
+                </div>
+                <div class="featured-item">
+                    <h3>💰 Best Value</h3>
+                    <p style="font-size: 1.2rem; margin: 1rem 0;">Student Combo</p>
+                    <div class="price">৳45 only</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="featured-section">
+            <h2 class="section-title" style="color: white; margin-bottom: 2rem;">📱 Get the Mobile App</h2>
+            <div style="text-align: center; color: white;">
+                <p style="font-size: 1.2rem; margin-bottom: 2rem;">Download our mobile app for faster access, push notifications, and exclusive deals!</p>
+                <div style="display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;">
+                    <a href="#" class="btn btn-primary" style="display: flex; align-items: center; gap: 0.5rem;">
+                        📱 Download for Android
+                    </a>
+                    <a href="#" class="btn btn-secondary" style="display: flex; align-items: center; gap: 0.5rem; background: white; color: #667eea;">
+                        🍎 Download for iOS
+                    </a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; margin-bottom: 2rem; text-align: left;">
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Quick Links</h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li><a href="#" style="color: white; text-decoration: none;">All Canteens</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Healthy Menu</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Daily Specials</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Nutrition Guide</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">For Canteen Owners</h3>
+                    <ul style="list-style: none; line-height: 2;">
+                        <li><a href="#" style="color: white; text-decoration: none;">Register Your Canteen</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Management Dashboard</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Analytics</a></li>
+                        <li><a href="#" style="color: white; text-decoration: none;">Support</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Contact Info</h3>
+                    <p>📧 canteenhub@diu.edu.bd</p>
+                    <p>📞 +880-2-9138234</p>
+                    <p>📍 Daffodil International University</p>
+                    <p>Savar, Dhaka-1341, Bangladesh</p>
+                </div>
+                <div>
+                    <h3 style="margin-bottom: 1rem;">Follow Us</h3>
+                    <div style="display: flex; gap: 1rem;">
+                        <a href="#" style="color: white; font-size: 1.5rem;">📘</a>
+                        <a href="#" style="color: white; font-size: 1.5rem;">📷</a>
+                        <a href="#" style="color: white; font-size: 1.5rem;">🐦</a>
+                        <a href="#" style="color: white; font-size: 1.5rem;">💼</a>
+                    </div>
+                </div>
+            </div>
+            <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 2rem 0;">
+            <p>&copy; 2025 DIU Canteen Hub. All rights reserved. | Promoting healthy campus dining since 2025</p>
+        </div>
+    </footer>
+
+    <script>
+        function viewCanteen(canteenId) {
+            alert(`Opening ${canteenId} canteen details... (This would navigate to the detailed canteen page in the full system)`);
+        }
+
+        // Simulate real-time updates
+        function updateStats() {
+            const stats = document.querySelectorAll('.stat-number');
+            stats.forEach(stat => {
+                if (stat.textContent.includes('+')) {
+                    const num = parseInt(stat.textContent);
+                    stat.textContent = (num + Math.floor(Math.random() * 5)) + '+';
+                }
+            });
+        }
+
+        // Update stats every 30 seconds to simulate real-time data
+        setInterval(updateStats, 30000);
+
+        // Add smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Search functionality demo
+        document.querySelector('.search-bar input').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                alert(`Searching for: "${this.value}"... (Search functionality would be implemented in the full system)`);
+            }
+        });
+
+        document.querySelector('.search-bar button').addEventListener('click', function() {
+            const searchTerm = document.querySelector('.search-bar input').value;
+            alert(`Searching for: "${searchTerm}"... (Search functionality would be implemented in the full system)`);
+        });
+    </script>
+</body>
+</html>
